@@ -7,6 +7,7 @@ import dds.monedero.exceptions.SaldoMenorException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MonederoTest {
@@ -19,11 +20,14 @@ public class MonederoTest {
 
   @Test
   void Poner() {
+
     cuenta.poner(1500);
+    assertEquals(cuenta.getSaldo(),1500);
   }
 
   @Test
   void PonerMontoNegativo() {
+
     assertThrows(MontoNegativoException.class, () -> cuenta.poner(-1500));
   }
 
@@ -32,6 +36,7 @@ public class MonederoTest {
     cuenta.poner(1500);
     cuenta.poner(456);
     cuenta.poner(1900);
+    assertEquals(cuenta.getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count(),3);
   }
 
   @Test
@@ -62,6 +67,7 @@ public class MonederoTest {
 
   @Test
   public void ExtraerMontoNegativo() {
+
     assertThrows(MontoNegativoException.class, () -> cuenta.sacar(-500));
   }
 
